@@ -25,7 +25,7 @@ async def on_message(message):
         await asyncio.sleep(5)
         await client.send_message(message.channel, 'Done sleeping')
     elif message.content.startswith('!league'):
-        await client.send_message(message.channel, 'Your a fag')
+        await client.send_message(message.channel, 'Doing stuff')
 
 try:
     client.run(auth.get_auth()['zhubot']['token'])
