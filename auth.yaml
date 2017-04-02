@@ -1,0 +1,5 @@
+zhubot:
+  client_id: 'Bot Client ID'
+  token: 'Bot Token'
+leagueoflegends:
+  api_key: 'League of Legends Api Key
