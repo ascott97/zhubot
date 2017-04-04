@@ -1,7 +1,7 @@
 import discord
 import asyncio
 import time
-from commands import meme_command, league_command
+from commands import memes, league
 import auth
 
 client = discord.Client()
@@ -19,14 +19,15 @@ async def on_ready():
 async def on_message(message):
     if message.content.startswith('!meme'):
         tmp = await client.send_message(message.channel, 'Finding something dank...')
-        meme = meme_command.get_memes()
+        meme = memes.get_memes()
         await client.edit_message(tmp, meme)
     elif message.content.startswith('!sleep'):
         await asyncio.sleep(5)
         await client.send_message(message.channel, 'Done sleeping')
     elif message.content.startswith('!league'):
-        await client.send_message(message.channel, 'Doing stuff')
-
+        tmp = await client.send_message(message.channel, 'Getting League data...')
+        league_data = league.handle_message(message)
+        await client.edit_message(tmp, league_data)
 try:
     client.run(auth.get_auth()['zhubot']['token'])
 except:
