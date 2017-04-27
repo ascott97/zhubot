@@ -16,8 +16,20 @@ def get_current_game(summoner_id):
     url = 'https://euw.api.riotgames.com/observer-mode/rest/consumer/getSpectatorGameInfo/EUW1/'
     params = {'api_key': auth.get_auth()['leagueoflegends']['api_key'] }
     response = requests.get((url + str(summoner_id)), params=params)
-    response = json.loads(response.text)
-    return response
+    if response.status_code == 404:
+        game = "Looks like that players not in a game!"
+    else:
+        response = json.loads(response.text)
+        players = []
+        for i in response['participants']:
+            players.append(i['summonerName'])
+        game = ('{:<30}        {:>30}\n'.format(players[0], players[5]) + 
+                '{:<30}        {:>30}\n'.format(players[1], players[6]) + 
+                '{:<30}   vs   {:>30}\n'.format(players[2], players[7]) + 
+                '{:<30}        {:>30}\n'.format(players[3], players[8]) + 
+                '{:<30}        {:>30}'.format(players[4], players[9])
+               )
+    return game
     
 
 def handle_message(message):

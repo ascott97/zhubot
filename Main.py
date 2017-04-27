@@ -27,7 +27,7 @@ async def on_message(message):
     elif message.content.startswith('!league'):
         tmp = await client.send_message(message.channel, 'Getting League data...')
         league_data = league.handle_message(message)
-        await client.edit_message(tmp, league_data)
+        await client.edit_message(tmp, '```' + league_data + '```')
 try:
     client.run(auth.get_auth()['zhubot']['token'])
 except:
