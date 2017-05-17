@@ -21,7 +21,7 @@ class league:
         params = {'api_key': self.api_key }
         response = requests.get((url + str(summoner_id)), params=params)
         if response.status_code == 404:
-            game = "Looks like that players not in a game!"
+            return "Looks like that players not in a game!"
         else:
             response = json.loads(response.text)
             players = []
@@ -35,6 +35,16 @@ class league:
                    )
         return game
     
+    def get_profile(self, summoner_id):
+      url = 'https://euw.api.riotgames.com/placeholder'
+      params = {'api_key': self.api_key}
+      response = requests.get((url + str(summoner_id)), params=params)
+      if response.status_code == 404:
+          return "Looks like that player doesn't exist."
+      else:
+        response = json.loads(response.text)
+        # do stuff
+        # set url
 
     def handle_message(self, message):
         if message.content.split()[1] == 'live':
@@ -42,5 +52,10 @@ class league:
             summoner_id = self.get_summoner_id(summoner_name)
             current_game = self.get_current_game(summoner_id)
             return current_game
-        
-        
+        elif message.content.split()[1] == 'profile':
+            summoner_name = message.content.split[2]
+            summoner_id = self.get_summoner_id(summoner_name)
+            profile = self.get_profile(summoner_id)
+            return profile 
+        else:
+	    return "Unkown command, must be one of `live` or `profile`"
